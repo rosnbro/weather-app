@@ -1,0 +1,1 @@
+This is a simple weather app using the OpenWeather API.
