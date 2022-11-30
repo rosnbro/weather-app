@@ -1,10 +1,10 @@
 const locationInput = document.getElementById('location');
 const locationButton = document.getElementById('locationButton');
 
-locationButton.addEventListener('click', () => search());
+locationButton.addEventListener('click', () => search(locationInput.value));
 locationInput.addEventListener('keydown', (e) => {
   if (e.key === 'Enter') {
-    search();
+    search(e.target.value);
     console.log(e)
     e.preventDefault();
   }
@@ -32,15 +32,18 @@ async function weatherData(location, units) {
   }
 }
 
-async function geocodeData(city, country, state) {
+async function geocodeData(spot) {
   try {
     let url = '';
-    if (state) {
-      url = `http://api.openweathermap.org/geo/1.0/direct?q=${city},${state},${country}&limit=1&appid=53a8ca4edc6d9f89d1a3c6144858865a`;
-    } else if (country) {
-      url = `http://api.openweathermap.org/geo/1.0/direct?q=${city},${country}&limit=1&appid=53a8ca4edc6d9f89d1a3c6144858865a`;
+    if (spot.state && spot.country) {
+      url = `http://api.openweathermap.org/geo/1.0/direct?q=${spot.city},${spot.state},${spot.country}&limit=1&appid=53a8ca4edc6d9f89d1a3c6144858865a`;
+    } else if (spot.state) {
+      spot.country = 'US'
+      url = `http://api.openweathermap.org/geo/1.0/direct?q=${spot.city},${spot.state},${spot.country}&limit=1&appid=53a8ca4edc6d9f89d1a3c6144858865a`;
+    } else if (spot.country) {
+      url = `http://api.openweathermap.org/geo/1.0/direct?q=${spot.city},${spot.country}&limit=1&appid=53a8ca4edc6d9f89d1a3c6144858865a`;
     } else {
-      url = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=53a8ca4edc6d9f89d1a3c6144858865a`;
+      url = `http://api.openweathermap.org/geo/1.0/direct?q=${spot.city}&limit=1&appid=53a8ca4edc6d9f89d1a3c6144858865a`;
     }
 
     let response = await fetch(url, {mode: 'cors'});
@@ -54,11 +57,20 @@ async function geocodeData(city, country, state) {
   }
 }
 
-async function search() {
-  let spot = await geocodeData('London', 'GB', 'england');
+async function search(input) {
+  // let userChoice = cleanSearch(input);
+  let location = {
+    city: 'Roanoke',
+    state: 'VA',
+  }
+  let spot = await geocodeData(location);
   let weather = await weatherData(spot, 'metric');
   console.log(spot);
   console.log(weather);
+}
+
+function cleanSearch(input) {
+
 }
 
 search();
