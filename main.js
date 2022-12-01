@@ -1,14 +1,21 @@
-const locationInput = document.getElementById('location');
+const cityInput = document.getElementById('city');
+const stateInput = document.getElementById('state');
+const countryInput = document.getElementById('country');
 const locationButton = document.getElementById('locationButton');
 
-locationButton.addEventListener('click', () => search(locationInput.value));
-locationInput.addEventListener('keydown', (e) => {
+locationButton.addEventListener('click', () => {
+  search(cityInput, stateInput, countryInput);
+});
+cityInput.addEventListener('keydown', (e) => handleKeydown(e));
+stateInput.addEventListener('keydown', (e) => handleKeydown(e));
+countryInput.addEventListener('keydown', (e) => handleKeydown(e));
+
+function handleKeydown(e) {
   if (e.key === 'Enter') {
-    search(e.target.value);
-    console.log(e)
+    search(cityInput, stateInput, countryInput);
     e.preventDefault();
   }
-});
+}
 
 async function weatherData(location, units) {
   try {
@@ -57,21 +64,24 @@ async function geocodeData(spot) {
   }
 }
 
-async function search(input) {
-  // let userChoice = cleanSearch(input);
-  let location = {
-    city: 'Roanoke',
-    state: 'VA',
-  }
+async function search(city, state, country) {
+  let location = validateSearch(city, state, country);
   let spot = await geocodeData(location);
   let weather = await weatherData(spot, 'metric');
   console.log(spot);
   console.log(weather);
 }
 
-function cleanSearch(input) {
-
+function validateSearch(cityInput, stateInput, countryInput) {
+  if (cityInput.validity.valid && stateInput.validity.valid && countryInput.validity.valid) {
+    return {
+      city: cityInput.value,
+      state: stateInput.value,
+      country: countryInput.value
+    }
+  } else {
+    alert('input a valid city name');
+  }
 }
 
-search();
-
+search(cityInput, stateInput, countryInput); // Default load
