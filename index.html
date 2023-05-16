@@ -11,10 +11,19 @@
 <body>
   <form>
     <label for="location">
-      <span>Enter a location:</span>
-      <input type="text" name="location" id="city" placeholder="City" pattern="[A-Za-z\s]+" value="New York" required>
-      <input type="text" name="state" id="state" placeholder="State" pattern="[A-Za-z]+" value="NY">
-      <input type="text" name="country" id="country" placeholder="Country" pattern="[A-Za-z]+" value="US">
+      <legend>Location:</legend>
+      <fieldset>
+        <input type="text" name="location" id="city" placeholder="City" pattern="[A-Za-z\s]+" value="New York" required>
+        <input type="text" name="state" id="state" placeholder="State" pattern="[A-Za-z]+" value="NY">
+        <input type="text" name="country" id="country" placeholder="Country" pattern="[A-Za-z]+" value="US">
+      </fieldset>
+      <legend>Units:</legend>
+      <fieldset>
+        <input type="radio" name="units" id="imperial"  value="imperial" checked>
+        <label for="imperial">imperial</label>
+        <input type="radio" name="units" id="metric" value="metric">
+        <label for="metric">metric</label>
+      </fieldset>
     </label>
     <p>
       <button id="locationButton" type="button">enter</button>

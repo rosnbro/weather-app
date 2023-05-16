@@ -2,13 +2,24 @@ const cityInput = document.getElementById('city');
 const stateInput = document.getElementById('state');
 const countryInput = document.getElementById('country');
 const locationButton = document.getElementById('locationButton');
+const imperialSelector = document.getElementById('imperial');
+const metricSelector = document.getElementById('metric');
+
 
 locationButton.addEventListener('click', () => {
   search(cityInput, stateInput, countryInput);
 });
+imperialSelector.addEventListener('click', () => {
+  search(cityInput, stateInput, countryInput);
+});
+metricSelector.addEventListener('click', () => {
+  search(cityInput, stateInput, countryInput);
+})
+
 cityInput.addEventListener('keydown', (e) => handleKeydown(e));
 stateInput.addEventListener('keydown', (e) => handleKeydown(e));
 countryInput.addEventListener('keydown', (e) => handleKeydown(e));
+
 
 function handleKeydown(e) {
   if (e.key === 'Enter') {
@@ -69,11 +80,12 @@ async function geocodeData(spot) {
 }
 
 async function search(city, state, country) {
+  let units = document.querySelector('input[name="units"]:checked');
   let location = validateSearch(city, state, country);
   if (location != false) {
     let spot = await geocodeData(location);
     if (spot != false) {
-      let weather = await weatherData(spot, 'metric'); // check for C or F
+      let weather = await weatherData(spot, units.value);
       displayData(weather);
     }
   }
