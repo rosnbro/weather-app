@@ -35,7 +35,9 @@ async function weatherData(location, units) {
       units: units,
     };
   } catch (err) {
+    alert('Weather data not available.');
     console.log(err);
+    return false;
   }
 }
 
@@ -60,16 +62,21 @@ async function geocodeData(spot) {
       lon: location[0]['lon'],
     };
   } catch (err) {
+    handleBadLocation();
     console.log(err);
+    return false;
   }
 }
 
 async function search(city, state, country) {
   let location = validateSearch(city, state, country);
-  let spot = await geocodeData(location);
-  let weather = await weatherData(spot, 'metric');
-  console.log(spot);
-  console.log(weather);
+  if (location != false) {
+    let spot = await geocodeData(location);
+    if (spot != false) {
+      let weather = await weatherData(spot, 'metric'); // check for C or F
+      displayData(weather);
+    }
+  }
 }
 
 function validateSearch(cityInput, stateInput, countryInput) {
@@ -80,7 +87,19 @@ function validateSearch(cityInput, stateInput, countryInput) {
       country: countryInput.value
     }
   } else {
-    alert('input a valid city name');
+    handleBadLocation();
+    return false;
+  }
+}
+
+function handleBadLocation() {
+  alert('Please enter a valid location');
+}
+
+function displayData(weather) {
+  for (const dataPoint in weather) {
+    let displayData = document.getElementById(dataPoint);
+    displayData.innerHTML = `${dataPoint} : ${weather[dataPoint]}`;
   }
 }
 
