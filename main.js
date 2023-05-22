@@ -35,7 +35,6 @@ async function weatherData(location, units) {
     return {
       feels_like: weather['main']['feels_like'],
       humidity: weather['main']['humidity'],
-      pressure: weather['main']['pressure'],
       temp: weather['main']['temp'],
       name: weather['name'],
       sunrise: weather['sys']['sunrise'],
@@ -109,9 +108,49 @@ function handleBadLocation() {
 }
 
 function displayData(weather) {
-  for (const dataPoint in weather) {
+  let display = formatData(weather);
+  for (const dataPoint in display) {
     let displayData = document.getElementById(dataPoint);
-    displayData.innerHTML = `${dataPoint} : ${weather[dataPoint]}`;
+    displayData.innerHTML = `${dataPoint} : ${display[dataPoint]}`;
+  }
+}
+
+function formatData(weather) {
+  let units = weather['units'];
+  
+  weather['windDir'] += '°';
+  weather['humidity'] += '%';
+  weather['sunset'] = formatTime(weather['sunset']);
+  weather['sunrise'] = formatTime(weather['sunrise']);
+  weather['temp'] = formatTemp(weather['temp'], units);
+  weather['windspeed'] = formatSpeed(weather['windspeed'], units);
+  weather['feels_like'] = formatTemp(weather['feels_like'], units);
+  return weather;
+}
+
+function formatTime(apiTime) {
+  let time = new Date(apiTime * 1000);
+  let hours = time.getHours();
+  let minutes = time.getMinutes();
+  if (hours > 12) {
+    return `${hours - 12}:${minutes} PM`;
+  } else return `${hours}:${minutes} AM`;
+}
+
+function formatTemp(apiTemp, units) {
+  let temp = Math.round(apiTemp);
+  if (units == 'imperial') {
+    return temp += '°F';
+  } else if (units == 'metric') {
+    return temp += '°C';
+  } else return temp += 'K';
+}
+
+function formatSpeed(speed, units) {
+  if (units == 'imperial') {
+    return speed + ' mph';
+  } else if (units == 'metric') {
+    return speed + ' m/s';
   }
 }
 
