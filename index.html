@@ -10,36 +10,33 @@
 </head>
 <body>
   <form>
-    <label for="location">
+    <fieldset>
       <legend>Location:</legend>
-      <fieldset>
-        <input type="text" name="location" id="city" placeholder="City" pattern="[A-Za-z\s]+" value="New York" required>
-        <input type="text" name="state" id="state" placeholder="State" pattern="[A-Za-z]+" value="NY">
-        <input type="text" name="country" id="country" placeholder="Country" pattern="[A-Za-z]+" value="US">
-      </fieldset>
-      <legend>Units:</legend>
-      <fieldset>
-        <input type="radio" name="units" id="imperial"  value="imperial" checked>
-        <label for="imperial">imperial</label>
-        <input type="radio" name="units" id="metric" value="metric">
-        <label for="metric">metric</label>
-      </fieldset>
-    </label>
-    <p>
+      <input type="text" name="location" id="city" placeholder="City" pattern="[A-Za-z\s]+" value="New York" required>
+      <input type="text" name="state" id="state" placeholder="State/Province" pattern="[A-Za-z]+" value="NY">
+      <input type="text" name="country" id="country" placeholder="Country" pattern="[A-Za-z]+" value="US">
       <button id="locationButton" type="button">enter</button>
-    </p>
+      <div id="name" hidden></div>
+    </fieldset>
+    <fieldset>
+      <legend>Temperature:</legend>
+      <input type="radio" name="units" id="imperial"  value="imperial" checked>
+      <label for="imperial">imperial</label>
+      <input type="radio" name="units" id="metric" value="metric">
+      <label for="metric">metric</label>
+      <div id="temp"></div>
+      <div id="units" hidden></div>
+      <div id="feels_like"></div>
+      <div id="humidity"></div>
+    </fieldset>
+    <fieldset>
+      <legend>Atmosphere:</legend>
+      <div id="description"></div>
+      <div id="sunrise"></div>
+      <div id="sunset"></div>
+      <div id="windDir"></div>
+      <div id="windspeed"></div>
+    </fieldset>
   </form>
-  <main id="weatherOutput">
-    <div id="description"></div>
-    <div id="feels_like"></div>
-    <div id="humidity"></div>
-    <div id="name"></div>
-    <div id="sunrise"></div>
-    <div id="sunset"></div>
-    <div id="temp"></div>
-    <div id="units"></div>
-    <div id="windDir"></div>
-    <div id="windspeed"></div>
-  </main>
 </body>
 </html>

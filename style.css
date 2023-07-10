@@ -1,3 +1,29 @@
+:root {
+  --font-main: 1.2rem 'Times New Roman', Times, serif;
+}
+
+html {
+  font: var(--font-main);
+}
+
 input:invalid {
   border-color: red;
+}
+
+input {
+  border: none;
+  font: var(--font-main);
+}
+
+#temp {
+
+}
+
+#humidity {
+
+}
+
+fieldset div, 
+fieldset input {
+  margin: 8px;
 }

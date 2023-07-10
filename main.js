@@ -4,6 +4,7 @@ const countryInput = document.getElementById('country');
 const locationButton = document.getElementById('locationButton');
 const imperialSelector = document.getElementById('imperial');
 const metricSelector = document.getElementById('metric');
+const temperature = document.getElementById('temp');
 
 
 locationButton.addEventListener('click', () => {
@@ -14,8 +15,12 @@ imperialSelector.addEventListener('click', () => {
 });
 metricSelector.addEventListener('click', () => {
   search(cityInput, stateInput, countryInput);
-})
-
+});
+/*
+temperature.addEventListener('click', () => {
+  search(cityInput, stateInput, countryInput, true);
+});
+*/
 cityInput.addEventListener('keydown', (e) => handleKeydown(e));
 stateInput.addEventListener('keydown', (e) => handleKeydown(e));
 countryInput.addEventListener('keydown', (e) => handleKeydown(e));
@@ -110,21 +115,24 @@ function handleBadLocation() {
 function displayData(weather) {
   let display = formatData(weather);
   for (const dataPoint in display) {
-    let displayData = document.getElementById(dataPoint);
-    displayData.innerHTML = `${dataPoint} : ${display[dataPoint]}`;
+    if (document.getElementById(dataPoint)) {
+      let displayData = document.getElementById(dataPoint);
+      displayData.innerHTML = `${dataPoint} : ${display[dataPoint]}`;
+    }
   }
 }
 
 function formatData(weather) {
   let units = weather['units'];
   
-  weather['windDir'] += '°';
   weather['humidity'] += '%';
   weather['sunset'] = formatTime(weather['sunset']);
   weather['sunrise'] = formatTime(weather['sunrise']);
   weather['temp'] = formatTemp(weather['temp'], units);
+  weather['windDir'] = formatWindDir(weather['windDir']);
   weather['windspeed'] = formatSpeed(weather['windspeed'], units);
   weather['feels_like'] = formatTemp(weather['feels_like'], units);
+  weather['description'] = formatDescription(weather['description']);
   return weather;
 }
 
@@ -132,9 +140,16 @@ function formatTime(apiTime) {
   let time = new Date(apiTime * 1000);
   let hours = time.getHours();
   let minutes = time.getMinutes();
-  if (hours > 12) {
-    return `${hours - 12}:${minutes} PM`;
-  } else return `${hours}:${minutes} AM`;
+  
+  if (minutes < 10) {
+    if (hours > 12) {
+      return `${hours - 12}:0${minutes} PM`;
+    } else return `${hours}:0${minutes} AM`;
+  } else {
+    if (hours > 12) {
+      return `${hours - 12}:${minutes} PM`;
+    } else return `${hours}:${minutes} AM`;
+  }
 }
 
 function formatTemp(apiTemp, units) {
@@ -152,6 +167,14 @@ function formatSpeed(speed, units) {
   } else if (units == 'metric') {
     return speed + ' m/s';
   }
+}
+
+function formatDescription(description) {
+  return description;
+}
+
+function formatWindDir(windDir) {
+  return windDir + '°';
 }
 
 search(cityInput, stateInput, countryInput); // Default load
