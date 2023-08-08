@@ -56,14 +56,14 @@ async function geocodeData(spot) {
   try {
     let url = '';
     if (spot.state && spot.country) {
-      url = `http://api.openweathermap.org/geo/1.0/direct?q=${spot.city},${spot.state},${spot.country}&limit=1&appid=53a8ca4edc6d9f89d1a3c6144858865a`;
+      url = `https://api.openweathermap.org/geo/1.0/direct?q=${spot.city},${spot.state},${spot.country}&limit=1&appid=53a8ca4edc6d9f89d1a3c6144858865a`;
     } else if (spot.state) {
       spot.country = 'US'
-      url = `http://api.openweathermap.org/geo/1.0/direct?q=${spot.city},${spot.state},${spot.country}&limit=1&appid=53a8ca4edc6d9f89d1a3c6144858865a`;
+      url = `https://api.openweathermap.org/geo/1.0/direct?q=${spot.city},${spot.state},${spot.country}&limit=1&appid=53a8ca4edc6d9f89d1a3c6144858865a`;
     } else if (spot.country) {
-      url = `http://api.openweathermap.org/geo/1.0/direct?q=${spot.city},${spot.country}&limit=1&appid=53a8ca4edc6d9f89d1a3c6144858865a`;
+      url = `https://api.openweathermap.org/geo/1.0/direct?q=${spot.city},${spot.country}&limit=1&appid=53a8ca4edc6d9f89d1a3c6144858865a`;
     } else {
-      url = `http://api.openweathermap.org/geo/1.0/direct?q=${spot.city}&limit=1&appid=53a8ca4edc6d9f89d1a3c6144858865a`;
+      url = `https://api.openweathermap.org/geo/1.0/direct?q=${spot.city}&limit=1&appid=53a8ca4edc6d9f89d1a3c6144858865a`;
     }
 
     let response = await fetch(url, {mode: 'cors'});
