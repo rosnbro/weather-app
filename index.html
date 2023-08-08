@@ -9,28 +9,32 @@
   <script src="./main.js" defer></script>
 </head>
 <body>
+  <h1>weather for boring people</h1>
   <form>
-    <fieldset>
-      <legend>Location:</legend>
-      <input type="text" name="location" id="city" placeholder="City" pattern="[A-Za-z\s]+" value="New York" required>
-      <input type="text" name="state" id="state" placeholder="State/Province" pattern="[A-Za-z]+" value="NY">
-      <input type="text" name="country" id="country" placeholder="Country" pattern="[A-Za-z]+" value="US">
+    <fieldset class="location">
+      <legend>location</legend>
+      <input type="text" name="location" id="city" placeholder="city" pattern="[A-Za-z\s]+" value="new york" required>
+      <input type="text" name="state" id="state" placeholder="state" pattern="[A-Za-z]+" value="ny">
+      <input type="text" name="country" id="country" placeholder="country" pattern="[A-Za-z]+" value="usa">
       <button id="locationButton" type="button">enter</button>
       <div id="name" hidden></div>
     </fieldset>
-    <fieldset>
-      <legend>Temperature:</legend>
+    <fieldset class="units">
+      <legend>units</legend>
       <input type="radio" name="units" id="imperial"  value="imperial" checked>
       <label for="imperial">imperial</label>
       <input type="radio" name="units" id="metric" value="metric">
       <label for="metric">metric</label>
+    </fieldset>
+    <fieldset class="temperature">
+      <legend>temperature</legend>
       <div id="temp"></div>
       <div id="units" hidden></div>
       <div id="feels_like"></div>
       <div id="humidity"></div>
     </fieldset>
-    <fieldset>
-      <legend>Atmosphere:</legend>
+    <fieldset class="atmosphere">
+      <legend>atmosphere</legend>
       <div id="description"></div>
       <div id="sunrise"></div>
       <div id="sunset"></div>

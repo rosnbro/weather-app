@@ -16,11 +16,7 @@ imperialSelector.addEventListener('click', () => {
 metricSelector.addEventListener('click', () => {
   search(cityInput, stateInput, countryInput);
 });
-/*
-temperature.addEventListener('click', () => {
-  search(cityInput, stateInput, countryInput, true);
-});
-*/
+
 cityInput.addEventListener('keydown', (e) => handleKeydown(e));
 stateInput.addEventListener('keydown', (e) => handleKeydown(e));
 countryInput.addEventListener('keydown', (e) => handleKeydown(e));
@@ -117,7 +113,36 @@ function displayData(weather) {
   for (const dataPoint in display) {
     if (document.getElementById(dataPoint)) {
       let displayData = document.getElementById(dataPoint);
-      displayData.innerHTML = `${dataPoint} : ${display[dataPoint]}`;
+      switch (dataPoint) {
+        case 'temp':
+          displayData.innerHTML = `${display[dataPoint]}`;
+          break;
+        case 'feels_like':
+          displayData.innerHTML = `feels like ${display[dataPoint]}`;
+          break;
+        case 'humidity':
+          displayData.innerHTML = `${display[dataPoint]} humidity`;
+          break;
+        case 'description':
+          displayData.innerHTML = `${display[dataPoint]}`;
+          break;
+        case 'sunrise':
+          displayData.innerHTML = `sunrise at ${display[dataPoint]}`;
+          break;
+        case 'sunset':
+          displayData.innerHTML = `sunset at ${display[dataPoint]}`;
+          break;
+        case 'windDir':
+          displayData.innerHTML = `wind coming from ${display[dataPoint]}`;
+          break;
+        case 'windspeed':
+          displayData.innerHTML = `at ${display[dataPoint]}`;
+          break;
+        default:
+          displayData.innerHTML = `${dataPoint}: ${display[dataPoint]}`;
+          break;
+      }
+      
     }
   }
 }
@@ -140,7 +165,7 @@ function formatTime(apiTime) {
   let time = new Date(apiTime * 1000);
   let hours = time.getHours();
   let minutes = time.getMinutes();
-  
+
   if (minutes < 10) {
     if (hours > 12) {
       return `${hours - 12}:0${minutes} PM`;
